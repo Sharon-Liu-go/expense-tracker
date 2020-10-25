@@ -1,22 +1,21 @@
 const mongoose = require('mongoose')
-const schema = mongoose.Schema
+const Schema = mongoose.Schema
 const recordSchema = new Schema({
   name: {
-    type: String,
-    required: true
+    type: String
   },
   category: {
-    type: String,
-    required: true
+    type: String
+
   },
   date: {
-    type: String,
-    required: true
+    type: String
+
   },
   amount: {
-    type: Number,
-    required: true
-  },
+    type: Number
+
+  }
 })
 
 module.exports = mongoose.model('Record', recordSchema)

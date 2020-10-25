@@ -1,4 +1,4 @@
-const Record = require('..//record')
+const Record = require('../record')
 const db = require('../../config/mongoose')
 
 db.once('open', () => {
@@ -37,5 +37,4 @@ db.once('open', () => {
     }
   )
   console.log('done')
-  db.close()
 })

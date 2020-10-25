@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/expense-tracker')
+mongoose.connect('mongodb://localhost/expense-tracker', { useUnifiedTopology: true, useNewUrlParser: true })
 
 const db = mongoose.connection
 
