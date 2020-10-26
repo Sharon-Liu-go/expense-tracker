@@ -1,12 +1,11 @@
 <div class="container">
   <div class="input-group mb-3">
-    <select class="form-control" id="filter-category" name="category" onchange="submit()">
+    <select class="form-control" id="filter-category" name="categories" onchange="submit()">
       <option selected>類別</option>
       {{#each categories}}
       <option value="{{this.category}}">{{this.category}}</option>
       {{/each}}
     </select>
-    {{!-- value 待放入seeder的資料 --}}
   </div>
 
   <div class=" totalAmount">

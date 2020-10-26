@@ -5,8 +5,8 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 
 router.get('/', (req, res) => {
-  const sharon = req.query.categories
-  console.log(sharon)
+  const categorySelected = req.query.categories
+  console.log(categorySelected)
   console.log(Record)
   let categories = Category.find().lean().then((category) => {
     categories = category
