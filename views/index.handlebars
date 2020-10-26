@@ -1,16 +1,15 @@
 <div class="container">
   <div class="input-group mb-3">
-    <select class="custom-select" id="inputGroupSelect01">
+    <select class="form-control" id="filter-category" name="category" onchange="submit()">
       <option selected>類別</option>
-      <option value="1">家居物業</option>
-      <option value="2">交通出行</option>
-      <option value="3">餐飲食品</option>
-      <option value="4">其他</option>
+      {{#each categories}}
+      <option value="{{this.category}}">{{this.category}}</option>
+      {{/each}}
     </select>
     {{!-- value 待放入seeder的資料 --}}
   </div>
 
-  <div class="totalAmount">
+  <div class=" totalAmount">
     <h3>總金額:</h3>
     <h2></h2>
     {{!--  --}}
@@ -51,7 +50,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>確定刪除『{{this.name}}』</p>
+            <p>確定刪除『{{this.name}}』嗎?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
