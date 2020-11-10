@@ -1,27 +1,35 @@
 <div class="container">
-  <div class="input-group mb-3">
-    <select class="form-control" id="filter-category" name="categories" onchange="submit()">
-      <option selected>類別</option>
-      {{#each categories}}
-      <option value="{{this.category}}">{{this.category}}</option>
-      {{/each}}
-    </select>
-  </div>
+  <form action="/" method="get">
+    <div class="input-group mb-3">
+      <label for="filter-category">類別</label>
+      <select class="form-control" id="filter-category" name="categories" onchange="form.submit()">
+        <option>
+          {{#if categorySelected}} {{categorySelected}}{{else}}全部
+          {{/if}}
+        </option>
+        <option value="">全部</option>
+        {{#each categories}}
+        <option value={{this.category}}>
+          {{this.category}}
+        </option>
+        {{/each}}
+      </select>
+    </div>
+  </form>
 
   <div class=" totalAmount">
-    <h3>總金額:</h3>
+    <h3>總金額:{{totalAmount}}</h3>
     <h2></h2>
     {{!--  --}}
-
   </div>
 
   <ul class="list-group">
-    {{#each records}}
+    {{#each recordsData}}
     <li class="list-group-item">
       <div class="row">
         <div class="col-auto mr-auto d-flex">
           <div class="left-description d-flex">
-            <div class="img">img</div>
+            <div class="{{this.icon}}"></div>
             <div class="content">
               <div class="name">{{this.name}}</div>
               <div class="date">{{this.date}}</div>
@@ -60,10 +68,9 @@
         </div>
       </div>
     </div>
-
-
     {{/each}}
   </ul>
 
   <a class="btn btn-danger" href="/expense/new">新增費用</a>
+
 </div>

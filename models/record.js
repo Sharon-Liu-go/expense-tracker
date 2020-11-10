@@ -8,6 +8,10 @@ const recordSchema = new Schema({
     type: String
 
   },
+  icon: {
+    type: String
+
+  },
   date: {
     type: String
 

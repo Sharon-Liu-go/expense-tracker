@@ -1,14 +1,24 @@
 const express = require("express")
 const router = express.Router()
 const Record = require('../../models/record')
+const Category = require('../../models/category')
 
 router.get('/new', (req, res) => {
   res.render('new')
 })
 
 router.post('/', (req, res) => {
-  console.log(req.body)
-  Record.create(req.body)
+  let categoryChoosed = req.body.category
+  console.log(`icon:${categoryChoosed}`)
+  let icon = ""
+  Category.find()
+    .lean()
+    .then((categoryItem => { if (categoryItem.category === categoryChoosed) { icon = categoryItem.icon } }))
+  console.log(`icon:${icon}`)
+  // let icon = { icon: "fas fa-home" }
+  let sharon = Object.assign(req.body, icon)
+  console.log(`新增:${sharon}`)
+  Record.create(sharon)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
