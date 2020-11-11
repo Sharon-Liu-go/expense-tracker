@@ -8,19 +8,18 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  let categoryChoosed = req.body.category
-  console.log(`icon:${categoryChoosed}`)
+  let categoryChosen = req.body.category
+  console.log(`'icon:' ${categoryChosen} `)
   let icon = ""
-  Category.find()
+  Category.findOne({ category: categoryChosen })
     .lean()
-    .then((categoryItem => { if (categoryItem.category === categoryChoosed) { icon = categoryItem.icon } }))
-  console.log(`icon:${icon}`)
-  // let icon = { icon: "fas fa-home" }
-  let sharon = Object.assign(req.body, icon)
-  console.log(`新增:${sharon}`)
-  Record.create(sharon)
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+    .then(categoryItem => {
+      icon = categoryItem.icon
+      console.log(`icon:${icon}`)
+      return Record.create(Object.assign(req.body, { icon }))
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
+    })
 })
 
 router.get('/edit/:id', (req, res) => {
@@ -32,14 +31,23 @@ router.get('/edit/:id', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
+  let categoryChosen = req.body.category
   const id = req.params.id
-  Record.findById(id)
-    .then(record => {
-      record = Object.assign(record, req.body)
-      return record.save()
+  let icon = ""
+  Category.findOne({ category: categoryChosen })
+    .lean()
+    .then(categoryItem => {
+      icon = categoryItem.icon
+      console.log(`icon:${icon}`)
+      return Record.findById(id)
+        .then(record => {
+          record = Object.assign(record, req.body, { icon })
+          return record.save()
+        })
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
     })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+
 })
 
 router.delete('/:id', (req, res) => {
@@ -49,7 +57,6 @@ router.delete('/:id', (req, res) => {
     .then(record => record.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
-  // res.redirect('/')
 })
 
 

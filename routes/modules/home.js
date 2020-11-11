@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 
       let recordsFiltered = records.filter(record => record.category === categorySelected)
       let recordsData = categorySelected ? recordsFiltered : records
+      console.log(recordsData)
       let totalAmount = 0
       recordsData.forEach(data => totalAmount += data.amount)
       res.render('index', { recordsData, categories, categorySelected, totalAmount })
