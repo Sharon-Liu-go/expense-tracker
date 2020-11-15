@@ -2,22 +2,31 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const recordSchema = new Schema({
   name: {
-    type: String
+    type: String,
+    required: true
   },
   category: {
-    type: String
+    type: String,
+    required: true
 
   },
   icon: {
-    type: String
+    type: String,
+    required: true
 
   },
   date: {
-    type: String
+    type: String,
+    required: true
 
   },
   amount: {
-    type: Number
+    type: Number,
+    required: true
+
+  },
+  merchant: {
+    type: String
 
   },
   userId: {  // 加入關聯設定

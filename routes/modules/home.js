@@ -5,15 +5,17 @@ const Record = require('../../models/record')
 const Category = require('../../models/category')
 const Year = require('../../models/year')
 
-let categories = Category.find().lean().then((category) => {
-  return categories = category
-})
+
 
 let currentYear = new Date().getFullYear().toString()
 
 router.get('/', (req, res) => {
   let years = Year.find().lean().then((year) => {
     return years = year
+  })
+  let categories = []
+  categories = Category.find().lean().then((category) => {
+    return categories = category
   })
   const userId = req.user._id
   let renderData = []
@@ -38,6 +40,10 @@ router.get('/', (req, res) => {
 router.get('/filter', (req, res) => {
   let years = Year.find().lean().then((year) => {
     return years = year
+  })
+  let categories = []
+  categories = Category.find().lean().then((category) => {
+    return categories = category
   })
   const categorySelected = req.query.categories
   let yearSelected = req.query.years

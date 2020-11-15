@@ -2,6 +2,11 @@ const express = require("express")
 
 const app = express()
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+
 const routes = require("./routes")
 const methodOverride = require("method-override")
 
@@ -11,18 +16,14 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')   // 引用套件
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
 const port = process.env.PORT
 require('./config/mongoose')
 
-
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,  //會在每一次與使用者互動後，強制把 session 更新到 session store 裡。
-  saveUninitialized: true //強制將未初始化的 session 存回 session store。未初始化表示這個 session 是新的而且沒有被修改過，例如未登入的使用者的 session。
+  secret: 'ThisIsMyDadSecret',
+  resave: false,
+  saveUninitialized: true
 }))
 
 usePassport(app)
