@@ -8,14 +8,8 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-  let { email, password } = req.body
-
-  User.find
-
   res.render('login')
 })
-
-
 
 
 router.get('/register', (req, res) => {
@@ -23,32 +17,29 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-  let { name, email, password, confirmPassword } = req.body
+  const { name, email, password, confirmPassword } = req.body
 
   User.findOne({ email })
-    .lean()
     .then(user => {
       //已註冊過
       if (user) {
         console.log('this email has already existed')
-        res.render('register', name, email, password, confirmPassword)
+        res.render('register', { name, email, password, confirmPassword })
       } else {
         //尚未註冊，但密碼與確認密碼不相符
         if (password !== confirmPassword) {
           console.log('password與confirmPassword不一致')
-          res.render('register', name, email, password, confirmPassword)
+          res.render('register', { name, email, password, confirmPassword })
         } else {
-          //尚未註冊，密碼與確認密碼相符，加入註冊，並進入login頁面
-          return User.create({ name, email, password })
-            .then(() => res.redirect('/users/login'))
+          //尚未註冊，密碼與確認密碼相符，加入資料庫，並進入login頁面
+          User.create({ name, email, password })
+            .then(() => res.redirect('/user/login'))
             .catch(error => console.group(error))
         }
       }
 
     })
-  res.render('register')
 })
-
 
 
 
