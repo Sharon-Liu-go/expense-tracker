@@ -1,10 +1,10 @@
 const express = require("express")
-const port = 3020
+
 const app = express()
 
 const routes = require("./routes")
 const methodOverride = require("method-override")
-require('./config/mongoose')
+
 const session = require('express-session')
 const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
@@ -14,6 +14,9 @@ const flash = require('connect-flash')   // 引用套件
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
+const port = process.env.PORT
+require('./config/mongoose')
 
 
 app.use(session({

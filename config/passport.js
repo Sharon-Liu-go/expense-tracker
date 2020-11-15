@@ -20,18 +20,18 @@ module.exports = app => {
           if (!isMatch) {
             return done(null, false, { message: 'Email or Password incorrect.' })
           }
+          return done(null, user)
         })
-        return done(null, user)
       })
       .catch(err => done(err, false))
   }))
+
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
-    console.log(profile)
     const { name, email } = profile._json
     User.findOne({ email })
       .then(user => {
