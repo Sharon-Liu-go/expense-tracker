@@ -14,7 +14,7 @@
 <body>
   <header>
     <nav class="navbar navbar-light bg-light mb-3">
-      <a class="navbar-brand" href="/">{{#if isAuthenticated}}{{user.name}}{{/if}}老爸的私房錢</a>
+      <a class="navbar-brand" href="/">{{#if isAuthenticated}}{{user.name}}的私房錢{{else}}老爸的私房錢{{/if}}</a>
 
       {{#if isAuthenticated}}<a class="btn btn-outline-dark" href="/user/logout">Logout</a>
       {{else}}<a class="btn btn-outline-dark" href="/user/login">Login</a>

@@ -10,14 +10,16 @@ let categories = Category.find().lean().then((category) => {
 })
 
 let currentYear = new Date().getFullYear().toString()
-let renderData = []
-let totalAmount = 0
 
 router.get('/', (req, res) => {
   let years = Year.find().lean().then((year) => {
     return years = year
   })
-  Record.find()
+  const userId = req.user._id
+  let renderData = []
+  let totalAmount = 0
+
+  Record.find({ userId })
     .lean()
     .then((records) => {
       renderData = records.filter((record) => {
@@ -40,14 +42,14 @@ router.get('/filter', (req, res) => {
   const categorySelected = req.query.categories
   let yearSelected = req.query.years
   const monthSelected = req.query.months
-
   console.log(`篩選:類別${categorySelected}、年份${yearSelected}、月份${monthSelected}`)
 
-  Record.find()
+  const userId = req.user._id
+  Record.find({ userId })
     .lean()
     .then((records) => {
-      renderData = records
-      totalAmount = amount(records);
+      let renderData = records
+      let totalAmount = amount(records);
       let recordsFiltered = [];
       let noFoundMessage = "";
 

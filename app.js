@@ -9,6 +9,7 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const flash = require('connect-flash')   // 引用套件
 
 
 app.use(session({
@@ -19,11 +20,17 @@ app.use(session({
 
 usePassport(app)
 
+app.use(flash())  // 掛載套件
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg')  // 設定 warning_msg 訊息
+  res.locals.error = req.flash('error') // 新增 error flash
+
   next()
 })
+
 
 app.use(bodyParser.urlencoded({ extended: true }))
 

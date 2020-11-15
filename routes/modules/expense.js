@@ -12,8 +12,11 @@ router.get('/new', (req, res) => {
 router.post('/', (req, res) => {
   let categoryChosen = req.body.category
   let yearFilledIn = req.body.date.slice(0, 4)
-  console.log(`yearFilledIn: ${yearFilledIn}`)
+  let icon = ""
+  const userId = req.user._id
 
+
+  //將未建立過的年份寫入year的資料庫
   Year.find({ year: yearFilledIn })
     .lean()
     .then(yearItem => {
@@ -24,15 +27,13 @@ router.post('/', (req, res) => {
       }
     })
 
-
-  console.log(`'icon:' ${categoryChosen} `)
-  let icon = ""
   Category.findOne({ category: categoryChosen })
     .lean()
     .then(categoryItem => {
+
       icon = categoryItem.icon
       console.log(`icon:${icon}`)
-      return Record.create(Object.assign(req.body, { icon }))
+      return Record.create(Object.assign(req.body, { icon, userId }))
         .then(() => res.redirect('/'))
         .catch(error => console.log(error))
     })
@@ -71,7 +72,9 @@ router.delete('/:id', (req, res) => {
   console.log(id)
   Record.findById(id)
     .then(record => record.remove())
-    .then(() => res.redirect('/'))
+    .then(() =>
+      res.redirect('/')
+    )
     .catch(error => console.log(error))
 })
 
