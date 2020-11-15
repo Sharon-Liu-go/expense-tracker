@@ -17,7 +17,13 @@ app.use(session({
   saveUninitialized: true //強制將未初始化的 session 存回 session store。未初始化表示這個 session 是新的而且沒有被修改過，例如未登入的使用者的 session。
 }))
 
+usePassport(app)
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -26,7 +32,7 @@ app.set('view engine', 'handlebars')
 
 app.use(methodOverride('_method'))
 
-usePassport(app)
+
 app.use(routes)
 
 
