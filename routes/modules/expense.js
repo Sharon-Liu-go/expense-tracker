@@ -2,6 +2,8 @@ const express = require("express")
 const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
+const Year = require('../../models/year')
+
 
 router.get('/new', (req, res) => {
   res.render('new')
@@ -9,6 +11,20 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   let categoryChosen = req.body.category
+  let yearFilledIn = req.body.date.slice(0, 4)
+  console.log(`yearFilledIn: ${yearFilledIn}`)
+
+  Year.find({ year: yearFilledIn })
+    .lean()
+    .then(yearItem => {
+      if (yearItem.length === 0) {
+        return Year.create(Object.assign({ year: yearFilledIn }))
+          .then(() => res.redirect('./'))
+          .catch(error => console.log(error))
+      }
+    })
+
+
   console.log(`'icon:' ${categoryChosen} `)
   let icon = ""
   Category.findOne({ category: categoryChosen })
