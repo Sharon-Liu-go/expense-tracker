@@ -10,34 +10,61 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  let categoryChosen = req.body.category
-  let yearFilledIn = req.body.date.slice(0, 4)
+  let { name, date, category, amount, merchant } = req.body
+  // let categoryChosen = req.body.category
+  let yearFilledIn = date.slice(0, 4)
   let icon = ""
   const userId = req.user._id
+  console.log(req.body)
+  Promise.all([
+    Year.find({ year: yearFilledIn }).lean(),
+    Category.findOne({ category: category }).lean()
+  ])
+    .then(([yearItem, categoryItem]) => {
+      if (!name || !date || category == "Choose..." || !amount) {
+        req.flash('warning_msg', '＊為必填欄位')
+        return res.redirect('/expense/new')
+      } else if (date.length !== 10 && date.indexOf(" ")) {
+        req.flash('warning_msg', 'date欄位請依yyyy/mm/dd格式')
+        return res.redirect('/expense/new')
+      } else {
 
+        //將未建立過的年份寫入year的資料庫
+        if (yearItem.length === 0) {
+          Year.create(Object.assign({ year: yearFilledIn }))
+        }
 
-  //將未建立過的年份寫入year的資料庫
-  Year.find({ year: yearFilledIn })
-    .lean()
-    .then(yearItem => {
-      if (yearItem.length === 0) {
-        return Year.create(Object.assign({ year: yearFilledIn }))
-          .then(() => res.redirect('./'))
+        icon = categoryItem.icon
+
+        return Record.create(Object.assign(req.body, { icon, userId }))
+          .then(() => { return res.redirect('/') })
           .catch(error => console.log(error))
       }
     })
-
-  Category.findOne({ category: categoryChosen })
-    .lean()
-    .then(categoryItem => {
-
-      icon = categoryItem.icon
-      console.log(`icon:${icon}`)
-      return Record.create(Object.assign(req.body, { icon, userId }))
-        .then(() => res.redirect('/'))
-        .catch(error => console.log(error))
-    })
+    .catch(error => console.log(error))
 })
+//將未建立過的年份寫入year的資料庫
+//   Year.find({ year: yearFilledIn })
+//     .lean()
+//     .then(yearItem => {
+//       if (yearItem.length === 0) {
+//         return Year.create(Object.assign({ year: yearFilledIn }))
+//           .then(() => res.redirect('./'))
+//           .catch(error => console.log(error))
+//       }
+//     })
+
+//   Category.findOne({ category: categoryChosen })
+//     .lean()
+//     .then(categoryItem => {
+
+//       icon = categoryItem.icon
+//       console.log(`icon:${icon}`)
+//       return Record.create(Object.assign(req.body, { icon, userId }))
+//         .then(() => res.redirect('/'))
+//         .catch(error => console.log(error))
+//     })
+// })
 
 router.get('/edit/:id', (req, res) => {
   const id = req.params.id
