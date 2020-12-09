@@ -19,7 +19,7 @@
       </div>
 
       {{!-- month --}}
-      <div class="input-group mb-3">
+      <div class="input-group mb-3 ml-2 mr-2">
         <label for="filter-month">月份</label>
         <select class="form-control" id="filter-month" name="months" onchange="form.submit()">
           <option {{#if monthSelected}}value={{monthSelected}}{{/if}}>
@@ -96,8 +96,9 @@
 
         <div class="col-auto">
           <div class="input-group-append">
-            <a href="/expense/edit/{{this._id}}">編輯</a>
-            <button data-toggle="modal" data-target="#delete{{this._id}}" style="display:inline;">刪除</button>
+            <a class="btn" href="/expense/edit/{{this._id}}"><i class="fas fa-edit"></i></a>
+            <a href="" class="btn" data-toggle="modal" data-target="#delete{{this._id}}" style="display:inline;"><i
+                class="fas fa-trash-alt"></i></a>
           </div>
         </div>
       </div>
@@ -127,6 +128,6 @@
     {{/each}}
   </ul>
 
-  <a class="btn btn-danger" href="/expense/new">新增費用</a>
+  <a class="btn btn-danger mt-2" href="/expense/new">新增費用</a>
 
 </div>
