@@ -21,11 +21,13 @@ router.post('/', (req, res) => {
     Category.findOne({ category: category }).lean()
   ])
     .then(([yearItem, categoryItem]) => {
+      const checkDateFormat = date.match(/^[1-9]\d{3}\-[0-1]?\d\-[0-3]?\d$/)
+      console.log(checkDateFormat)
       if (!name || !date || category == "Choose..." || !amount) {
         req.flash('warning_msg', '＊為必填欄位')
         return res.redirect('/expense/new')
-      } else if (date.length !== 10 && date.indexOf(" ")) {
-        req.flash('warning_msg', 'date欄位請依yyyy/mm/dd格式')
+      } else if (checkDateFormat === null) {
+        req.flash('warning_msg', 'date欄位請依yyyy-mm-dd格式')
         return res.redirect('/expense/new')
       } else {
 
@@ -87,12 +89,13 @@ router.put('/:id', (req, res) => {
     Record.findById(id)
   ])
     .then(([yearItem, categoryItem, record]) => {
-
+      const checkDateFormat = date.match(/^[1-9]\d{3}\-[0-1]?\d\-[0-3]?\d$/)
+      console.log(checkDateFormat)
       if (!name || !date || category == "Choose..." || !amount) {
         req.flash('warning_msg', '＊為必填欄位')
         return res.redirect(`/expense/edit/${id}`)
-      } else if (date.length !== 10 && date.indexOf(" ")) {
-        req.flash('warning_msg', 'date欄位請依yyyy/mm/dd格式')
+      } else if (checkDateFormat === null) {
+        req.flash('warning_msg', 'date欄位請依yyyy-mm-dd格式')
         return res.redirect(`/expense/edit/${id}`)
       } else {
 
