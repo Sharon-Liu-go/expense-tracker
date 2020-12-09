@@ -32,6 +32,7 @@ db.once('open', () => {
           icon: "fas fa-home",
           date: '2020/10/23',
           amount: '10000',
+          merchant: '蝦皮',
           userId: user._id
 
         },
@@ -41,6 +42,7 @@ db.once('open', () => {
           icon: "fas fa-shuttle-van",
           date: '2020/10/23',
           amount: '1280',
+          merchant: '北捷',
           userId: user._id
 
         },
@@ -50,6 +52,7 @@ db.once('open', () => {
           icon: "fas fa-grin-beam",
           date: '2020/10/23',
           amount: '700',
+          merchant: 'ABC餐廳',
           userId: user._id
 
         },
@@ -59,6 +62,7 @@ db.once('open', () => {
           icon: "fas fa-utensils",
           date: '2020/10/23',
           amount: '85',
+          merchant: '知高便當店',
           userId: user._id
 
         },
@@ -68,6 +72,7 @@ db.once('open', () => {
           icon: "fas fa-pen",
           date: '2020/10/23',
           amount: '500',
+          merchant: '管委會',
           userId: user._id
         })
         .then(() => {
