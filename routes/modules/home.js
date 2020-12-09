@@ -6,36 +6,54 @@ const Category = require('../../models/category')
 const Year = require('../../models/year')
 
 
-
 let currentYear = new Date().getFullYear().toString()
 
 router.get('/', (req, res) => {
-  let years = Year.find().lean().then((year) => {
-    return years = year
-  })
-  let categories = []
-  categories = Category.find().lean().then((category) => {
-    return categories = category
-  })
   const userId = req.user._id
   let renderData = []
   let totalAmount = 0
 
-  Record.find({ userId })
-    .lean()
-    .then((records) => {
-      renderData = records.filter((record) => {
-        return new Date(record.date).getFullYear().toString() === currentYear
-      })
-
-      renderData.forEach(data => {
-        totalAmount = totalAmount += data.amount
-        return totalAmount
-      })
-      res.render('index', { renderData, totalAmount, categories, years })
-    }).catch(error => console.error(error))
-
+  return Promise.all([
+    Year.find().lean(),
+    Category.find().lean(),
+    Record.find({ userId }).lean()
+  ]).then(([years, categories, records]) => {
+    renderData = records.filter((record) => {
+      return new Date(record.date).getFullYear().toString() === currentYear
+    })
+    renderData.forEach(data => {
+      totalAmount = totalAmount += data.amount
+      return totalAmount
+    })
+    res.render('index', { renderData, totalAmount, categories, years })
+  })
 })
+
+//   let years = Year.find().lean().then((year) => {
+//     return years = year
+//   })
+//   let categories = Category.find().lean().then((category) => {
+//     return categories = category
+//   })
+//   const userId = req.user._id
+//   let renderData = []
+//   let totalAmount = 0
+
+//   Record.find({ userId })
+//     .lean()
+//     .then((records) => {
+//       renderData = records.filter((record) => {
+//         return new Date(record.date).getFullYear().toString() === currentYear
+//       })
+
+//       renderData.forEach(data => {
+//         totalAmount = totalAmount += data.amount
+//         return totalAmount
+//       })
+//       res.render('index', { renderData, totalAmount, categories, years })
+//     }).catch(error => console.error(error))
+// })
+
 
 router.get('/filter', (req, res) => {
   let years = Year.find().lean().then((year) => {
