@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
     .then(user => {
       //已註冊過
       if (user) {
-        error.push({ message: '此Email已註冊過' })
+        errors.push({ message: '此Email已註冊過' })
         return res.render('register', { name, email, password, confirmPassword, errors })
       } else {
         //尚未註冊，加入資料庫，並進入login頁面
