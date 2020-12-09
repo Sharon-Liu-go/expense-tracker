@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
       return totalAmount
     })
     res.render('index', { renderData, totalAmount, categories, years })
-  })
+  }).catch(err => console.log(err))
 })
 
 //   let years = Year.find().lean().then((year) => {
