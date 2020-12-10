@@ -7,9 +7,16 @@
         <label for="filter-year">年份</label>
         <select class="form-control" id="filter-year" name="years" onchange="form.submit()">
           {{#each years}}
+
+          {{#if ../yearSelected}}
           <option value={{this.year}} {{#ifCond ../yearSelected this.year }}selected{{/ifCond}}>
             {{this.year}}
           </option>
+          {{else}}
+          <option value={{this.year}} {{#ifCond ../currentYear this.year }}selected{{/ifCond}}>
+            {{this.year}}
+          </option>
+          {{/if}}
           {{/each}}
         </select>
       </div>

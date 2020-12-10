@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
   let totalAmount = 0
 
   return Promise.all([
-    Year.find().lean(),
+    Year.find().lean().sort({ year: 'desc' }),
     Category.find().lean(),
     Record.find({ userId }).lean()
   ]).then(([years, categories, records]) => {
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
       totalAmount = totalAmount += data.amount
       return totalAmount
     })
-    res.render('index', { renderData, totalAmount, categories, years })
+    res.render('index', { renderData, totalAmount, categories, years, currentYear })
   }).catch(err => console.log(err))
 })
 
