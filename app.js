@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
 
 app.use(methodOverride('_method'))

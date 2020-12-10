@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
     Category.find().lean(),
     Record.find({ userId }).lean()
   ]).then(([years, categories, records]) => {
+
     renderData = records.filter((record) => {
       return new Date(record.date).getFullYear().toString() === currentYear
     })

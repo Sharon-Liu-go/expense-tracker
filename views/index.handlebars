@@ -6,12 +6,8 @@
       <div class="input-group mb-3">
         <label for="filter-year">年份</label>
         <select class="form-control" id="filter-year" name="years" onchange="form.submit()">
-          <option>
-            {{#if yearSelected}} {{yearSelected}}{{else}}2020
-            {{/if}}
-          </option>
           {{#each years}}
-          <option value={{this.year}}>
+          <option value={{this.year}} {{#ifCond ../yearSelected this.year }}selected{{/ifCond}}>
             {{this.year}}
           </option>
           {{/each}}
@@ -22,23 +18,19 @@
       <div class="input-group mb-3 ml-2 mr-2">
         <label for="filter-month">月份</label>
         <select class="form-control" id="filter-month" name="months" onchange="form.submit()">
-          <option {{#if monthSelected}}value={{monthSelected}}{{/if}}>
-            {{#if monthSelected}}{{monthSelected}}{{else}}全部
-            {{/if}}
-          </option>
-          <option value="全部">全部</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
-          <option>8</option>
-          <option>9</option>
-          <option>10</option>
-          <option>11</option>
-          <option>12</option>
+          <option>全部</option>
+          <option {{#ifCond monthSelected "1" }} selected{{/ifCond}}>1</option>
+          <option {{#ifCond monthSelected "2"}} selected{{/ifCond}}>2</option>
+          <option {{#ifCond monthSelected "3"}} selected{{/ifCond}}>3</option>
+          <option {{#ifCond monthSelected "4"}} selected{{/ifCond}}>4</option>
+          <option {{#ifCond monthSelected "5"}} selected{{/ifCond}}>5</option>
+          <option {{#ifCond monthSelected "6"}} selected{{/ifCond}}>6</option>
+          <option {{#ifCond monthSelected "7"}} selected{{/ifCond}}>7</option>
+          <option {{#ifCond monthSelected "8"}} selected{{/ifCond}}>8</option>
+          <option {{#ifCond monthSelected "9"}} selected{{/ifCond}}>9</option>
+          <option {{#ifCond monthSelected "10"}} selected{{/ifCond}}>10</option>
+          <option{{#ifCond monthSelected "11"}} selected{{/ifCond}}>11</option>
+            <option {{#ifCond monthSelected "12"}} selected{{/ifCond}}>12</option>
         </select>
       </div>
       {{!-- category --}}
@@ -46,14 +38,10 @@
         <label for="filter-category">類別</label>
         <select class="form-control" id="filter-category" name="categories" onchange="form.submit()"
           style="display: inline;">
-          <option {{#if categorySelected}}value={{categorySelected}}{{/if}}>
-            {{#if categorySelected}} {{categorySelected}}{{else}}全部
-            {{/if}}
-          </option>
-          <option value="全部">全部</option>
+          <option>全部</option>
 
           {{#each categories}}
-          <option value={{this.category}}>
+          <option value="{{this.category}}" {{#ifCond ../categorySelected this.category }}selected{{/ifCond}}>
             {{this.category}}
           </option>
           {{/each}}
